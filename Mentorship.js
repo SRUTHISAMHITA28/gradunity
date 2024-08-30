@@ -1,14 +1,29 @@
-// src/components/Mentorship.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function Mentorship() {
+const Mentorship = () => {
+  const [mentorships, setMentorships] = useState([]);
+
+  useEffect(() => {
+    const fetchMentorships = async () => {
+      const response = await axios.get('/api/mentorships');
+      setMentorships(response.data);
+    };
+
+    fetchMentorships();
+  }, []);
+
   return (
-    <div className="mentorship">
+    <div>
       <h2>Mentorship Program</h2>
-      <p>Become a mentor or find a mentor to guide your career.</p>
-      {/* Implement mentor/mentee profile creation and management */}
+      {mentorships.map(mentorship => (
+        <div key={mentorship.id}>
+          <h3>Mentor: {mentorship.mentor_id}</h3>
+          <p>Status: {mentorship.status}</p>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default Mentorship;
