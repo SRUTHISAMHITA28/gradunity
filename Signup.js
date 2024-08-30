@@ -1,18 +1,14 @@
-// src/components/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-function Signup() {
+const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
     password: '',
-    reg_no: '',
-    email: ''
+    college_registration_number: '',
+    college_email_id: ''
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,33 +17,54 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/signup', formData);
-      alert('Signup successful!');
-      navigate('/login');
-    } catch (err) {
-      console.error(err);
-      alert('Signup failed.');
+      await axios.post('/api/auth/signup', formData);
+      // Redirect to Login or Dashboard
+    } catch (error) {
+      console.error('Signup failed', error);
     }
   };
 
   return (
-    <div className="signup">
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        <label>Username:</label>
-        <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-        <label>Password:</label>
-        <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        <label>Registration No:</label>
-        <input type="text" name="reg_no" value={formData.reg_no} onChange={handleChange} required />
-        <label>Email:</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-        <button type="submit">Signup</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        value={formData.name}
+        onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        value={formData.username}
+        onChange={handleChange}
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="college_registration_number"
+        placeholder="College Registration Number"
+        value={formData.college_registration_number}
+        onChange={handleChange}
+      />
+      <input
+        type="email"
+        name="college_email_id"
+        placeholder="College Email ID"
+        value={formData.college_email_id}
+        onChange={handleChange}
+      />
+      <button type="submit">Sign Up</button>
+    </form>
   );
-}
+};
 
 export default Signup;
+
