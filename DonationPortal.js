@@ -1,31 +1,36 @@
-// src/components/DonationPortal.js
 import React, { useState } from 'react';
+import axios from 'axios';
 
-function DonationPortal() {
+const DonationPortal = () => {
   const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [method, setMethod] = useState('UPI');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Process the donation (to be implemented)
+    try {
+      await axios.post('/api/donations', { amount, method });
+      alert('Thank you for your donation!');
+    } catch (error) {
+      console.error('Donation failed', error);
+    }
   };
 
   return (
-    <div className="donation-portal">
-      <h2>Donation Portal</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Amount:</label>
-        <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} required />
-        <label>Payment Method:</label>
-        <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} required>
-          <option value="upi">UPI</option>
-          <option value="net_banking">Net Banking</option>
-          <option value="credit_debit_card">Credit/Debit Card</option>
-        </select>
-        <button type="submit">Donate</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <select value={method} onChange={(e) => setMethod(e.target.value)}>
+        <option value="UPI">UPI</option>
+        <option value="Net Banking">Net Banking</option>
+        <option value="Credit/Debit Card">Credit/Debit Card</option>
+      </select>
+      <button type="submit">Donate</button>
+    </form>
   );
-}
+};
 
 export default DonationPortal;
