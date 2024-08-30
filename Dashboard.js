@@ -1,22 +1,21 @@
-// src/components/Dashboard.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Dashboard() {
+const Dashboard = () => {
   return (
-    <div className="dashboard">
-      <h2>Welcome to Your Dashboard</h2>
-      <ul>
-        <li><Link to="/profile">View Profile</Link></li>
-        <li><Link to="/job-portal">Job Portal</Link></li>
-        <li><Link to="/donation-portal">Donation Portal</Link></li>
-        <li><Link to="/mentorship">Mentorship Program</Link></li>
-        <li><Link to="/events">Events Calendar</Link></li>
-        <li><Link to="/blog">Write a Blog</Link></li>
-        <li><Link to="/survey">Feedback Survey</Link></li>
-      </ul>
+    <div>
+      <h1>Welcome to GradUnity Dashboard</h1>
+      <nav>
+        <Link to="/profile">Profile</Link>
+        <Link to="/job-portal">Job Portal</Link>
+        <Link to="/donation-portal">Donation Portal</Link>
+        <Link to="/mentorship">Mentorship Program</Link>
+        <Link to="/events">Events Calendar</Link>
+        <Link to="/blogs">Blogs</Link>
+        <Link to="/survey">Survey Forum</Link>
+      </nav>
     </div>
   );
-}
+};
 
 export default Dashboard;
