@@ -1,34 +1,30 @@
-// src/components/JobPortal.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function JobPortal() {
+const JobPortal = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    // Fetch job listings (to be implemented)
-    axios.get('http://localhost:5000/jobs').then(response => {
+    const fetchJobs = async () => {
+      const response = await axios.get('/api/jobs');
       setJobs(response.data);
-    }).catch(error => {
-      console.error(error);
-    });
+    };
+
+    fetchJobs();
   }, []);
 
   return (
-    <div className="job-portal">
+    <div>
       <h2>Job Portal</h2>
-      <ul>
-        {jobs.map(job => (
-          <li key={job.id}>
-            <h3>{job.title}</h3>
-            <p>{job.description}</p>
-            <p>Location: {job.location}</p>
-            <p>Posted by: {job.postedBy}</p>
-          </li>
-        ))}
-      </ul>
+      {jobs.map(job => (
+        <div key={job.id}>
+          <h3>{job.title}</h3>
+          <p>{job.description}</p>
+          <p>{job.location}</p>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default JobPortal;
